@@ -8,7 +8,6 @@ import (
 
 	"github.com/gruntwork-io/terragrunt/errors"
 	"github.com/gruntwork-io/terragrunt/options"
-	"github.com/gruntwork-io/terragrunt/remote"
 	"github.com/gruntwork-io/terragrunt/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -24,7 +23,7 @@ remote_state {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.Terraform)
@@ -47,7 +46,7 @@ remote_state = {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.Terraform)
@@ -72,7 +71,7 @@ func TestParseTerragruntJsonConfigRemoteStateMinimalConfig(t *testing.T) {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.Terraform)
@@ -92,7 +91,7 @@ func TestParseTerragruntHclConfigRemoteStateMissingBackend(t *testing.T) {
 remote_state {}
 `
 
-	_, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	_, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Missing required argument; The argument \"backend\" is required")
 }
@@ -112,7 +111,7 @@ remote_state {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -148,7 +147,7 @@ func TestParseTerragruntJsonConfigRemoteStateFullConfig(t *testing.T) {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -178,7 +177,7 @@ retryable_errors = [
     "Another one of my errors"
 ]
 `
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.Terraform)
@@ -205,7 +204,7 @@ func TestParseTerragruntJsonConfigRetryConfiguration(t *testing.T) {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.Terraform)
@@ -224,7 +223,7 @@ func TestParseIamRole(t *testing.T) {
 
 	config := `iam_role = "terragrunt-iam-role"`
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -242,7 +241,7 @@ func TestParseIamAssumeRoleDuration(t *testing.T) {
 
 	config := `iam_assume_role_duration = 36000`
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -264,7 +263,7 @@ dependencies {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -289,7 +288,7 @@ dependencies {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -327,7 +326,7 @@ dependencies {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -375,7 +374,7 @@ func TestParseTerragruntJsonConfigRemoteStateDynamoDbTerraformConfigAndDependenc
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -416,7 +415,7 @@ include {
 		Logger:               util.CreateLogEntry("", util.DEFAULT_LOG_LEVEL),
 	}
 
-	terragruntConfig, err := ParseConfigString(config, &opts, nil, opts.TerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, &opts, nil, opts.TerragruntConfigPath, nil)
 	if assert.Nil(t, err, "Unexpected error: %v", errors.PrintErrorWithStackTrace(err)) {
 		assert.Nil(t, terragruntConfig.Terraform)
 
@@ -443,7 +442,7 @@ include {
 
 	opts := mockOptionsForTestWithConfigPath(t, "../test/fixture-parent-folders/terragrunt-in-root/child/sub-child/sub-sub-child/"+DefaultTerragruntConfigPath)
 
-	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath, nil)
 	if assert.Nil(t, err, "Unexpected error: %v", errors.PrintErrorWithStackTrace(err)) {
 		assert.Nil(t, terragruntConfig.Terraform)
 
@@ -482,7 +481,7 @@ remote_state {
 
 	opts := mockOptionsForTestWithConfigPath(t, "../test/fixture-parent-folders/terragrunt-in-root/child/sub-child/sub-sub-child/"+DefaultTerragruntConfigPath)
 
-	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath, nil)
 	if assert.Nil(t, err, "Unexpected error: %v", errors.PrintErrorWithStackTrace(err)) {
 		assert.Nil(t, terragruntConfig.Terraform)
 
@@ -529,7 +528,7 @@ dependencies {
 
 	opts := mockOptionsForTestWithConfigPath(t, "../test/fixture-parent-folders/terragrunt-in-root/child/sub-child/sub-sub-child/"+DefaultTerragruntConfigPath)
 
-	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath, nil)
 	require.NoError(t, err, "Unexpected error: %v", errors.PrintErrorWithStackTrace(err))
 
 	require.NotNil(t, terragruntConfig.Terraform)
@@ -577,7 +576,7 @@ func TestParseTerragruntJsonConfigIncludeOverrideAll(t *testing.T) {
 
 	opts := mockOptionsForTestWithConfigPath(t, "../test/fixture-parent-folders/terragrunt-in-root/child/sub-child/sub-sub-child/"+DefaultTerragruntJsonConfigPath)
 
-	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, opts, nil, opts.TerragruntConfigPath, nil)
 	require.NoError(t, err, "Unexpected error: %v", errors.PrintErrorWithStackTrace(err))
 
 	require.NotNil(t, terragruntConfig.Terraform)
@@ -608,7 +607,7 @@ func TestParseTerragruntConfigTwoLevels(t *testing.T) {
 
 	opts := mockOptionsForTestWithConfigPath(t, configPath)
 
-	_, actualErr := ParseConfigString(config, opts, nil, configPath)
+	_, actualErr := ParseConfigString(config, opts, nil, configPath, nil)
 	expectedErr := TooManyLevelsOfInheritance{
 		ConfigPath:             configPath,
 		FirstLevelIncludePath:  absPath(t, "../test/fixture-parent-folders/multiple-terragrunt-in-parents/child/"+DefaultTerragruntConfigPath),
@@ -629,7 +628,7 @@ func TestParseTerragruntConfigThreeLevels(t *testing.T) {
 
 	opts := mockOptionsForTestWithConfigPath(t, configPath)
 
-	_, actualErr := ParseConfigString(config, opts, nil, configPath)
+	_, actualErr := ParseConfigString(config, opts, nil, configPath, nil)
 	expectedErr := TooManyLevelsOfInheritance{
 		ConfigPath:             configPath,
 		FirstLevelIncludePath:  absPath(t, "../test/fixture-parent-folders/multiple-terragrunt-in-parents/child/sub-child/"+DefaultTerragruntConfigPath),
@@ -643,7 +642,7 @@ func TestParseTerragruntConfigEmptyConfig(t *testing.T) {
 
 	config := ``
 
-	cfg, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	cfg, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	assert.NoError(t, err)
 
 	assert.Nil(t, cfg.Terraform)
@@ -662,140 +661,12 @@ func TestParseTerragruntConfigEmptyConfigOldConfig(t *testing.T) {
 
 	config := ``
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	assert.Nil(t, terragruntConfig.RemoteState)
-}
-
-func TestMergeConfigIntoIncludedConfig(t *testing.T) {
-	t.Parallel()
-
-	testCases := []struct {
-		config         *TerragruntConfig
-		includedConfig *TerragruntConfig
-		expected       *TerragruntConfig
-	}{
-		{
-			&TerragruntConfig{},
-			&TerragruntConfig{},
-			&TerragruntConfig{},
-		},
-		{
-			&TerragruntConfig{},
-			&TerragruntConfig{Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{Terraform: &TerraformConfig{Source: ptr("foo")}},
-		},
-		{
-			&TerragruntConfig{},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "bar"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "bar"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-		},
-		{
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "foo"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "bar"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "foo"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "bar"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-			&TerragruntConfig{RemoteState: &remote.RemoteState{Backend: "bar"}, Terraform: &TerraformConfig{Source: ptr("foo")}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "childArgs"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{}},
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "childArgs"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "childArgs"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "parentArgs"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "parentArgs"}, TerraformExtraArguments{Name: "childArgs"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "overrideArgs", Arguments: &[]string{"-child"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "overrideArgs", Arguments: &[]string{"-parent"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{ExtraArgs: []TerraformExtraArguments{TerraformExtraArguments{Name: "overrideArgs", Arguments: &[]string{"-child"}}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: nil},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: nil},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "parentHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "parentHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "parentHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "parentHooks"}, Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"child-apply"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"parent-apply"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{BeforeHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"child-apply"}}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "parentHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "parentHooks"}, Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"child-apply"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"parent-apply"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooks", Commands: []string{"child-apply"}}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooksPlusMore", Commands: []string{"child-apply"}}, Hook{Name: "childHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooksPlusMore", Commands: []string{"parent-apply"}}, Hook{Name: "parentHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideHooksPlusMore", Commands: []string{"child-apply"}}, Hook{Name: "parentHooks"}, Hook{Name: "childHooks"}}}},
-		},
-		{
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideWithEmptyHooks"}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideWithEmptyHooks", Commands: []string{"parent-apply"}}}}},
-			&TerragruntConfig{Terraform: &TerraformConfig{AfterHooks: []Hook{Hook{Name: "overrideWithEmptyHooks"}}}},
-		},
-		{
-			&TerragruntConfig{},
-			&TerragruntConfig{Skip: true},
-			&TerragruntConfig{Skip: false},
-		},
-		{
-			&TerragruntConfig{Skip: false},
-			&TerragruntConfig{Skip: true},
-			&TerragruntConfig{Skip: false},
-		},
-		{
-			&TerragruntConfig{Skip: true},
-			&TerragruntConfig{Skip: true},
-			&TerragruntConfig{Skip: true},
-		},
-		{
-			&TerragruntConfig{IamRole: "role2"},
-			&TerragruntConfig{IamRole: "role1"},
-			&TerragruntConfig{IamRole: "role2"},
-		},
-	}
-
-	for _, testCase := range testCases {
-		actual, err := mergeConfigWithIncludedConfig(testCase.config, testCase.includedConfig, mockOptionsForTest(t))
-		if assert.Nil(t, err, "Unexpected error for config %v and includeConfig %v: %v", testCase.config, testCase.includedConfig, err) {
-			assert.Equal(t, testCase.expected, actual, "For config %v and includeConfig %v", testCase.config, testCase.includedConfig)
-		}
-	}
 }
 
 func TestParseTerragruntConfigTerraformNoSource(t *testing.T) {
@@ -805,7 +676,7 @@ func TestParseTerragruntConfigTerraformNoSource(t *testing.T) {
 terraform {}
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -826,7 +697,7 @@ terraform {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -857,7 +728,7 @@ terraform {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -916,7 +787,7 @@ terraform {
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.RemoteState)
@@ -972,7 +843,7 @@ func TestParseTerragruntJsonConfigTerraformWithMultipleExtraArguments(t *testing
 }
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntJsonConfigPath, nil)
 	require.NoError(t, err)
 
 	assert.Nil(t, terragruntConfig.RemoteState)
@@ -1213,7 +1084,7 @@ func TestParseTerragruntConfigPreventDestroyTrue(t *testing.T) {
 prevent_destroy = true
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1231,7 +1102,7 @@ func TestParseTerragruntConfigPreventDestroyFalse(t *testing.T) {
 prevent_destroy = false
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1249,7 +1120,7 @@ func TestParseTerragruntConfigSkipTrue(t *testing.T) {
 skip = true
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1267,7 +1138,7 @@ func TestParseTerragruntConfigSkipFalse(t *testing.T) {
 skip = false
 `
 
-	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, mockOptionsForTest(t), nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1294,7 +1165,7 @@ terraform {
 		Logger:               util.CreateLogEntry("", util.DEFAULT_LOG_LEVEL),
 	}
 
-	terragruntConfig, err := ParseConfigString(config, &opts, nil, DefaultTerragruntConfigPath)
+	terragruntConfig, err := ParseConfigString(config, &opts, nil, DefaultTerragruntConfigPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
