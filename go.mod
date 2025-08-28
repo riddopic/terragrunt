@@ -123,7 +123,7 @@ require (
 	gopkg.in/ini.v1 v1.44.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.5.1 // indirect
 	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107172259-749611fa9fcc // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 // This is necessary to workaround go modules error with terraform importing vault incorrectly.
