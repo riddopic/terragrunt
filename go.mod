@@ -1,6 +1,6 @@
 module github.com/gruntwork-io/terragrunt
 
-go 1.17
+go 1.23.0
 
 require (
 	cloud.google.com/go/storage v1.16.0
@@ -31,7 +31,7 @@ require (
 	github.com/zclconf/go-cty v1.8.3
 	go.mozilla.org/sops/v3 v3.7.2
 	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2
-	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f
+	golang.org/x/oauth2 v0.27.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	golang.org/x/sys v0.0.0-20220517195934-5e4e11fc645e
 	google.golang.org/api v0.54.0
@@ -71,7 +71,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/go-cmp v0.5.6 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/goware/prefixer v0.0.0-20160118172347-395022866408 // indirect
