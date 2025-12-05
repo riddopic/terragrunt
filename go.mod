@@ -25,15 +25,15 @@ require (
 	github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.3.3
-	github.com/sirupsen/logrus v1.8.1
-	github.com/stretchr/testify v1.6.1
+	github.com/sirupsen/logrus v1.8.3
+	github.com/stretchr/testify v1.7.0
 	github.com/urfave/cli v1.22.3
 	github.com/zclconf/go-cty v1.8.3
 	go.mozilla.org/sops/v3 v3.7.2
 	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2
 	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20220517195934-5e4e11fc645e
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
 	google.golang.org/api v0.54.0
 )
 
